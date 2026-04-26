@@ -1,17 +1,88 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import AppShell from './app/AppShell'
 import FeatureCard from './components/layout/FeatureCard'
 import { featureDefinitions } from './data/features'
+import {
+  buildTrajectoryModelSet,
+  defaultDamageAssessmentId,
+  getTrajectoryModelKey,
+  sampleDamageAssessments,
+  type TrajectoryModelKey,
+} from './data/sampleDamageAssessment'
+import DamageAssessmentWorkspace from './features/damage-assessment/DamageAssessmentWorkspace'
 import './App.css'
+
+type AppView = 'landing' | 'damage-assessment'
+
+function getViewFromHash(hash: string): AppView {
+  return hash === '#damage-assessment' ? 'damage-assessment' : 'landing'
+}
 
 function App() {
   const [selectedFeatureId, setSelectedFeatureId] = useState(
     featureDefinitions[0].id,
   )
+  const [view, setView] = useState<AppView>(() => getViewFromHash(window.location.hash))
+  const [selectedStormId, setSelectedStormId] = useState(defaultDamageAssessmentId)
+  const [activeModelKeys, setActiveModelKeys] = useState<TrajectoryModelKey[]>([
+    'base',
+    'wind',
+    'pressure',
+    'precipitation',
+  ])
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setView(getViewFromHash(window.location.hash))
+    }
+
+    window.addEventListener('hashchange', handleHashChange)
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange)
+    }
+  }, [])
 
   const selectedFeature =
     featureDefinitions.find((feature) => feature.id === selectedFeatureId) ??
     featureDefinitions[0]
+
+  const selectedDataset =
+    sampleDamageAssessments.find((dataset) => dataset.id === selectedStormId) ??
+    sampleDamageAssessments[0]
+  const modeledDatasets = buildTrajectoryModelSet(selectedDataset)
+  const visibleDatasets = modeledDatasets.filter((dataset) => {
+    const modelKey = getTrajectoryModelKey(dataset.id)
+
+    return activeModelKeys.includes(modelKey)
+  })
+
+  const isDamageAssessment = selectedFeature.id === 'damage-assessment'
+
+  if (view === 'damage-assessment') {
+    return (
+      <DamageAssessmentWorkspace
+        dataset={selectedDataset}
+        datasets={sampleDamageAssessments}
+        visibleDatasets={visibleDatasets}
+        activeModelKeys={activeModelKeys}
+        onStormChange={setSelectedStormId}
+        onModelToggle={(modelKey) => {
+          setActiveModelKeys((currentKeys) => {
+            if (currentKeys.includes(modelKey)) {
+              return currentKeys.filter((key) => key !== modelKey)
+            }
+
+            return [...currentKeys, modelKey]
+          })
+        }}
+        onBack={() => {
+          window.location.hash = ''
+          setView('landing')
+        }}
+      />
+    )
+  }
 
   return (
     <AppShell
@@ -77,6 +148,17 @@ function App() {
                 Scaffold the page shell, add mock data, and wire the first map,
                 chart, and scoring loop for <strong>{selectedFeature.title}</strong>.
               </p>
+              <div className="detail-actions">
+                {isDamageAssessment ? (
+                  <a href="#damage-assessment" className="workspace-link">
+                    Open Damage Assessment Workspace
+                  </a>
+                ) : (
+                  <span className="workspace-link workspace-link-disabled">
+                    Workspace coming soon
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </aside>
