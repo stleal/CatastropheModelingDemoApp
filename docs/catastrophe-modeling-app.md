@@ -19,7 +19,7 @@ Build a React app that models catastrophe trajectories, renders an impact cone o
 
 ## Feature Modules
 
-Split the app into five feature areas:
+Split the base app into five feature areas, then extend the same shell for claims surge forecasting, infrastructure impact, and historical replay:
 
 1. Scenario input and validation
 2. Path and cone simulation
@@ -55,24 +55,62 @@ src/
       PressureChart.tsx
       RainfallChart.tsx
       ZipDamageBarChart.tsx
+      ClaimsLoadChart.tsx
+      ClaimsMixChart.tsx
+      ServiceDisruptionChart.tsx
+      ReplayTimelineChart.tsx
     results/
       SummaryCards.tsx
       ZipImpactTable.tsx
       ScenarioStatsPanel.tsx
+      StaffingForecastPanel.tsx
+      ClaimsImpactTable.tsx
+      AssetImpactTable.tsx
+      CriticalAssetsPanel.tsx
+      ReplayEventSummary.tsx
+    infrastructure/
+      InfrastructureAssetsLayer.tsx
+    replay/
+      ReplayControls.tsx
+      HistoricalTrackLayer.tsx
   features/
     damage-assessment/
       DamageAssessmentPage.tsx
       damageAssessment.types.ts
       damageAssessment.constants.ts
       damageAssessment.hooks.ts
+    claims-forecasting/
+      ClaimsForecastPage.tsx
+      claimsForecast.types.ts
+      claimsForecast.constants.ts
+      claimsForecast.hooks.ts
+    infrastructure-impact/
+      InfrastructureImpactPage.tsx
+      infrastructureImpact.types.ts
+      infrastructureImpact.constants.ts
+      infrastructureImpact.hooks.ts
+    historical-replay/
+      HistoricalReplayPage.tsx
+      historicalReplay.types.ts
+      historicalReplay.constants.ts
+      historicalReplay.hooks.ts
   hooks/
     useScenarioState.ts
     useStormSimulation.ts
     useZipDamageModel.ts
+    useClaimsForecastModel.ts
+    useInfrastructureImpact.ts
+    useHistoricalReplay.ts
   services/
     geocoding.service.ts
     stormModel.service.ts
     damageModel.service.ts
+    claimsForecast.service.ts
+    portfolioMix.service.ts
+    infrastructureImpact.service.ts
+    assetScoring.service.ts
+    historicalReplay.service.ts
+    replayTimeline.service.ts
     export.service.ts
   utils/
     geo.ts
@@ -81,10 +119,18 @@ src/
   data/
     sampleScenario.ts
     sampleZips.ts
+    mockZipZones.ts
+    mockInfrastructureAssets.ts
+    mockExposureProfiles.ts
+    mockServiceProfiles.ts
+    historical/
+      sampleHistoricalStorm.ts
   styles/
     tokens.css
     layout.css
 ```
+
+The same three-panel shell can host `DamageAssessmentPage`, `ClaimsForecastPage`, `InfrastructureImpactPage`, and `HistoricalReplayPage` without changing the overall application structure.
 
 ## Top-Level Component Structure
 

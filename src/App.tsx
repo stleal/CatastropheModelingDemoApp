@@ -1,121 +1,87 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import AppShell from './app/AppShell'
+import FeatureCard from './components/layout/FeatureCard'
+import { featureDefinitions } from './data/features'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedFeatureId, setSelectedFeatureId] = useState(
+    featureDefinitions[0].id,
+  )
+
+  const selectedFeature =
+    featureDefinitions.find((feature) => feature.id === selectedFeatureId) ??
+    featureDefinitions[0]
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <AppShell
+      eyebrow="Catastrophe Modeling React App"
+      title="Select a catastrophe modeling workspace"
+      description="Start with one of four coordinated feature modules. Each view keeps the same map-first architecture while changing the scoring model, entity set, and analytics panel."
+    >
+      <main className="landing-grid">
+        <section className="feature-grid-section" aria-label="Feature selection">
+          <div className="section-heading">
+            <p className="section-label">Feature modules</p>
+            <p className="section-summary">
+              Rounded glossy cards for the four experiences planned in demo version 1.
+            </p>
+          </div>
 
-      <div className="ticks"></div>
+          <div className="feature-grid">
+            {featureDefinitions.map((feature) => (
+              <FeatureCard
+                key={feature.id}
+                feature={feature}
+                isSelected={feature.id === selectedFeature.id}
+                onSelect={setSelectedFeatureId}
+              />
+            ))}
+          </div>
+        </section>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <aside className="feature-detail-panel" aria-live="polite">
+          <div className="detail-surface">
+            <p className="section-label">Selected feature</p>
+            <div className="detail-heading-row">
+              <span className="detail-icon" aria-hidden="true">
+                {selectedFeature.icon}
+              </span>
+              <div>
+                <h2>{selectedFeature.title}</h2>
+                <p className="detail-summary">{selectedFeature.summary}</p>
+              </div>
+            </div>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+            <div className="metric-strip">
+              {selectedFeature.metrics.map((metric) => (
+                <div key={metric.label} className="metric-card">
+                  <span>{metric.label}</span>
+                  <strong>{metric.value}</strong>
+                </div>
+              ))}
+            </div>
+
+            <div className="detail-block">
+              <h3>Implementation focus</h3>
+              <ul className="detail-list">
+                {selectedFeature.focusAreas.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="detail-block detail-callout">
+              <h3>Next build slice</h3>
+              <p>
+                Scaffold the page shell, add mock data, and wire the first map,
+                chart, and scoring loop for <strong>{selectedFeature.title}</strong>.
+              </p>
+            </div>
+          </div>
+        </aside>
+      </main>
+    </AppShell>
   )
 }
 
