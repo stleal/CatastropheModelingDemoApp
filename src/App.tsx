@@ -145,6 +145,47 @@ function App() {
               </button>
             </form>
           </section>
+
+          <aside className="feature-detail-panel login-side-panel" aria-label="Access summary">
+            <div className="detail-surface login-detail-surface">
+              <p className="section-label">Access profile</p>
+              <div className="detail-heading-row">
+                <span className="detail-icon" aria-hidden="true">
+                  ID
+                </span>
+                <div>
+                  <h2>{DEMO_USERNAME}</h2>
+                  <p className="detail-summary">
+                    Demo administrator access for reviewing feature modules and entering the
+                    Damage Assessment workspace.
+                  </p>
+                </div>
+              </div>
+
+              <div className="metric-strip">
+                <div className="metric-card">
+                  <span>Role</span>
+                  <strong>Administrator</strong>
+                </div>
+                <div className="metric-card">
+                  <span>Environment</span>
+                  <strong>Demo</strong>
+                </div>
+                <div className="metric-card">
+                  <span>Modules</span>
+                  <strong>4 loaded</strong>
+                </div>
+              </div>
+
+              <div className="detail-block detail-callout">
+                <h3>Session notes</h3>
+                <p>
+                  This login is client-side only and is intended to stage the overview and
+                  workspace flow with the same visual theme as the landing page.
+                </p>
+              </div>
+            </div>
+          </aside>
         </main>
       </AppShell>
     )
