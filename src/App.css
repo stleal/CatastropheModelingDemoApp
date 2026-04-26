@@ -448,6 +448,37 @@
   line-height: 1.45;
 }
 
+.coordinate-toggle-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 14px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(120, 145, 155, 0.15);
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.coordinate-toggle-card input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: #0d7a96;
+}
+
+.coordinate-toggle-card strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--heading-color);
+}
+
+.coordinate-toggle-card p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
 .workspace-hero,
 .workspace-panel {
   border-radius: 28px;
@@ -577,6 +608,27 @@
 .storm-grid path {
   stroke: rgba(62, 116, 133, 0.12);
   stroke-width: 0.5;
+}
+
+.storm-axis-title,
+.storm-axis-tick {
+  fill: rgba(21, 73, 90, 0.7);
+  font-size: 2.8px;
+}
+
+.storm-axis-title {
+  font-size: 3px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-anchor: middle;
+}
+
+.storm-axis-tick {
+  text-anchor: middle;
+}
+
+.storm-axis-tick-y {
+  text-anchor: start;
 }
 
 .storm-cone {

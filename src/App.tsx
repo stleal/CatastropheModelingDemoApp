@@ -30,6 +30,7 @@ function App() {
     'pressure',
     'precipitation',
   ])
+  const [showAxisCoordinates, setShowAxisCoordinates] = useState(true)
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -66,6 +67,7 @@ function App() {
         datasets={sampleDamageAssessments}
         visibleDatasets={visibleDatasets}
         activeModelKeys={activeModelKeys}
+        showAxisCoordinates={showAxisCoordinates}
         onStormChange={setSelectedStormId}
         onModelToggle={(modelKey) => {
           setActiveModelKeys((currentKeys) => {
@@ -75,6 +77,9 @@ function App() {
 
             return [...currentKeys, modelKey]
           })
+        }}
+        onAxisCoordinatesToggle={() => {
+          setShowAxisCoordinates((currentValue) => !currentValue)
         }}
         onBack={() => {
           window.location.hash = ''

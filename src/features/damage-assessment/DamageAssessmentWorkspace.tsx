@@ -10,8 +10,10 @@ type DamageAssessmentWorkspaceProps = {
   datasets: DamageAssessmentDataset[]
   visibleDatasets: DamageAssessmentDataset[]
   activeModelKeys: TrajectoryModelKey[]
+  showAxisCoordinates: boolean
   onStormChange: (datasetId: string) => void
   onModelToggle: (modelKey: TrajectoryModelKey) => void
+  onAxisCoordinatesToggle: () => void
   onBack: () => void
 }
 
@@ -31,6 +33,23 @@ function formatCurrency(value: number) {
 
 function formatPercent(value: number) {
   return `${value}%`
+}
+
+const axisGridTicks = [0, 20, 40, 60, 80, 100]
+
+function getXAxisMiles(position: number, distanceTraveledMiles: number) {
+  return Math.round((distanceTraveledMiles * position) / 100)
+}
+
+function getYAxisLabel(position: number, distanceTraveledMiles: number) {
+  const axisRangeMiles = distanceTraveledMiles * 0.5
+  const offsetMiles = Math.round(((50 - position) / 50) * axisRangeMiles)
+
+  if (offsetMiles === 0) {
+    return '0 mi'
+  }
+
+  return offsetMiles > 0 ? `${offsetMiles} mi N` : `${Math.abs(offsetMiles)} mi S`
 }
 
 function getTotalEstimatedDamage(dataset: DamageAssessmentDataset) {
@@ -75,8 +94,10 @@ function DamageAssessmentWorkspace({
   datasets,
   visibleDatasets,
   activeModelKeys,
+  showAxisCoordinates,
   onStormChange,
   onModelToggle,
+  onAxisCoordinatesToggle,
   onBack,
 }: DamageAssessmentWorkspaceProps) {
   const totalEstimatedDamage = getTotalEstimatedDamage(dataset)
@@ -194,6 +215,18 @@ function DamageAssessmentWorkspace({
                 </div>
               </label>
             ))}
+
+            <label className="coordinate-toggle-card">
+              <input
+                type="checkbox"
+                checked={showAxisCoordinates}
+                onChange={onAxisCoordinatesToggle}
+              />
+              <div>
+                <strong>Show X/Y coordinates</strong>
+                <p>Toggle the mile labels and north-south coordinate guide on the map grid.</p>
+              </div>
+            </label>
           </div>
 
           <div className="panel-heading">
@@ -240,6 +273,22 @@ function DamageAssessmentWorkspace({
                 <path d="M 0 20 H 100 M 0 40 H 100 M 0 60 H 100 M 0 80 H 100" />
                 <path d="M 20 0 V 100 M 40 0 V 100 M 60 0 V 100 M 80 0 V 100" />
               </g>
+              {showAxisCoordinates ? (
+                <g className="storm-axis-labels" aria-hidden="true">
+                  <text x="50" y="6" className="storm-axis-title">North / South miles</text>
+                  <text x="50" y="97" className="storm-axis-title">X-axis miles east</text>
+                  {axisGridTicks.map((position) => (
+                    <text key={`x-${position}`} x={position === 0 ? 5 : position === 100 ? 95 : position} y="92" className="storm-axis-tick">
+                      {getXAxisMiles(position, dataset.scenario.distanceTraveledMiles)} mi
+                    </text>
+                  ))}
+                  {axisGridTicks.map((position) => (
+                    <text key={`y-${position}`} x="7" y={position === 0 ? 8 : position === 100 ? 94 : position + 1.5} className="storm-axis-tick storm-axis-tick-y">
+                      {getYAxisLabel(position, dataset.scenario.distanceTraveledMiles)}
+                    </text>
+                  ))}
+                </g>
+              ) : null}
               {visibleDatasets.map((resultSet) => {
                 const modelKey = getTrajectoryModelKey(resultSet.id)
 
