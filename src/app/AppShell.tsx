@@ -4,18 +4,14 @@ type AppShellProps = PropsWithChildren<{
   eyebrow: string
   title: string
   description: string
-  action?: React.ReactNode
 }>
 
-function AppShell({ eyebrow, title, description, action, children }: AppShellProps) {
+function AppShell({ eyebrow, title, description, children }: AppShellProps) {
   return (
     <div className="app-shell">
       <header className="hero-banner">
         <div className="hero-copy">
-          <div className="hero-copy-topline">
-            <p className="eyebrow">{eyebrow}</p>
-            {action ? <div className="hero-action">{action}</div> : null}
-          </div>
+          <p className="eyebrow">{eyebrow}</p>
           <h1>{title}</h1>
           <p className="hero-description">{description}</p>
         </div>

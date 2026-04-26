@@ -225,16 +225,12 @@ function App() {
       eyebrow="Catastrophe Modeling React App"
       title="Select a catastrophe modeling workspace"
       description="Start with one of four coordinated feature modules. Each view keeps the same map-first architecture while changing the scoring model, entity set, and analytics panel."
-      action={
-        <button type="button" className="ghost-link shell-action-button" onClick={handleSignOut}>
-          Sign out
-        </button>
-      }
     >
       <Overview
         features={featureDefinitions}
         selectedFeature={selectedFeature}
         onSelectFeature={setSelectedFeatureId}
+        onSignOut={handleSignOut}
       />
     </AppShell>
   )

@@ -5,9 +5,10 @@ type OverviewProps = {
   features: FeatureDefinition[]
   selectedFeature: FeatureDefinition
   onSelectFeature: (featureId: FeatureDefinition['id']) => void
+  onSignOut: () => void
 }
 
-function Overview({ features, selectedFeature, onSelectFeature }: OverviewProps) {
+function Overview({ features, selectedFeature, onSelectFeature, onSignOut }: OverviewProps) {
   const isDamageAssessment = selectedFeature.id === 'damage-assessment'
 
   return (
@@ -79,6 +80,14 @@ function Overview({ features, selectedFeature, onSelectFeature }: OverviewProps)
                   Workspace coming soon
                 </span>
               )}
+
+              <button
+                type="button"
+                className="ghost-link overview-signout-button"
+                onClick={onSignOut}
+              >
+                Sign out
+              </button>
             </div>
           </div>
         </div>

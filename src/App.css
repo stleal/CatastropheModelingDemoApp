@@ -28,18 +28,6 @@
   text-align: left;
 }
 
-.hero-copy-topline {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.hero-action {
-  display: flex;
-  align-items: center;
-}
-
 .eyebrow,
 .section-label {
   margin: 0;
@@ -401,6 +389,8 @@
 
 .detail-actions {
   display: flex;
+  flex-direction: column;
+  gap: 12px;
   margin-top: 4px;
 }
 
@@ -442,7 +432,8 @@
   cursor: pointer;
 }
 
-.shell-action-button {
+.overview-signout-button {
+  align-self: flex-end;
   min-height: 42px;
   font-weight: 700;
 }
@@ -1004,11 +995,6 @@
 }
 
 @media (max-width: 760px) {
-  .hero-copy-topline {
-    flex-direction: column;
-    align-items: start;
-  }
-
   .hero-banner,
   .feature-grid-section,
   .detail-surface,
