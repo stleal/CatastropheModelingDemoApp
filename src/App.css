@@ -681,6 +681,96 @@
   background: linear-gradient(180deg, rgba(234, 247, 250, 0.96), rgba(212, 232, 238, 0.88));
 }
 
+.impact-zone-map-card {
+  padding: 18px;
+  border-radius: 26px;
+  border: 1px solid rgba(120, 145, 155, 0.15);
+  background: rgba(255, 255, 255, 0.78);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.panel-heading-compact {
+  gap: 6px;
+}
+
+.impact-zone-map-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.impact-zone-map-frame {
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid rgba(120, 145, 155, 0.15);
+  min-height: 320px;
+}
+
+.impact-zone-map,
+.impact-zone-map-empty {
+  min-height: 320px;
+}
+
+.impact-zone-map-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  border-radius: 22px;
+  border: 1px dashed rgba(120, 145, 155, 0.28);
+  background: rgba(242, 250, 251, 0.92);
+  text-align: center;
+}
+
+.impact-zone-map-note {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+
+.impact-zone-popup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+}
+
+.impact-zone-popup p {
+  margin: 0;
+}
+
+.impact-zone-pin {
+  background: transparent;
+  border: 0;
+}
+
+.impact-zone-pin-marker {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px 18px 18px 0;
+  transform: rotate(-45deg);
+  background: linear-gradient(180deg, #d86954, #a73623);
+  border: 2px solid rgba(255, 255, 255, 0.94);
+  box-shadow: 0 12px 24px rgba(92, 28, 19, 0.3);
+}
+
+.impact-zone-pin-marker span {
+  transform: rotate(45deg);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.leaflet-container {
+  font: inherit;
+}
+
 .storm-map {
   width: 100%;
   height: auto;

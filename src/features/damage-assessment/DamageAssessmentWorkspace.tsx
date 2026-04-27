@@ -1,4 +1,5 @@
 import type { DamageAssessmentDataset, ZipImpact } from './damageAssessment.types'
+import ImpactZoneMap from './ImpactZoneMap'
 import {
   getTrajectoryModelKey,
   trajectoryModelOptions,
@@ -321,6 +322,15 @@ function DamageAssessmentWorkspace({
                 </g>
               ))}
             </svg>
+          </div>
+
+          <div className="impact-zone-map-card">
+            <div className="panel-heading panel-heading-compact">
+              <p className="section-label">Expected major impacts</p>
+              <h3>Interactive impact zone map</h3>
+            </div>
+
+            <ImpactZoneMap dataset={dataset} visibleDatasets={visibleDatasets} />
           </div>
 
           <button type="button" className="ghost-link storm-preview-action" onClick={onBack}>
